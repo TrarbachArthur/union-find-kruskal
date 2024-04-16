@@ -5,6 +5,8 @@
 
 typedef struct edge Edge;
 
+int compare_edges(const void* arg1, const void* arg2);
+
 Edge* edge_init(Point* p1, Point* p2, double distance);
 
 void edge_destroy(Edge* e);

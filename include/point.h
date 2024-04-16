@@ -7,9 +7,11 @@
 
 typedef struct point Point;
 
-Point** read_points(char* input_file_name);
+int compare_points(const void* arg1, const void* arg2);
 
-Point*  point_init(char* line, int dimensions, int point_id);
+Point** read_points(FILE* input_file, int point_amt, int dimensions);
+
+Point*  point_init(char* line, int point_id, int dimensions);
 
 double point_get_distance(Point* p1, Point* p2);
 
