@@ -9,6 +9,8 @@ UT* UT_init(int size);
 
 void UT_union(UT* ut, Point* p1, Point* p2);
 
+void UT_union_by_id(UT* ut, int pid1, int pid2);
+
 int UT_find(UT* ut, Point* p);
 
 int UT_find_by_id(UT* ut, int id);

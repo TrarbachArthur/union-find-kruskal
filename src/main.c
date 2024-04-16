@@ -34,26 +34,24 @@ int main(int argc, char const *argv[])
     fclose(input_file); // Closing input file (useless from now on)
 
     clock_t calc_distance_start = clock();
-    Edge** graph = generate_graph(point_amt, points);
+    Edge* graph = generate_graph(point_amt, points);
     clock_t calc_distance_end = clock();
 
-    
+
     clock_t sort_edges_start = clock();
     // Amount of edges = Lower diagonal of the distances matrix
     int edge_amt = (point_amt * (point_amt-1)) / 2; // N*(N-1)/2
-    qsort(graph, edge_amt, sizeof(Edge*), compare_edges);
+    qsort(graph, edge_amt, edge_sizeof(), compare_edges);
     clock_t sort_edges_end = clock();
+
 
     clock_t mst_start = clock();
     UT* ut = UT_init(point_amt);
     process_MST(ut, graph, point_amt, group_amt);
     clock_t mst_end = clock();
 
-    // Does not free points
+    // graph is useless from now on
     // Makes a little more memory available
-    for (int i = 0; i < edge_amt; i++) {
-        edge_destroy(graph[i]);
-    }
     free(graph);
 
     clock_t grouping_start = clock();

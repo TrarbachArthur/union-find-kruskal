@@ -34,10 +34,10 @@ int count_points(FILE* input_file) {
     return point_amt;
 }
 
-Edge** generate_graph(int point_amt, Point** points) {
+Edge* generate_graph(int point_amt, Point** points) {
     int graph_size = point_amt * (point_amt-1) / 2; // n*(n-1)/2 possible edges to the MST
     
-    Edge** graph = calloc(graph_size, sizeof(Edge*));
+    Edge* graph = calloc(graph_size, sizeof(Edge));
 
     int idx = 0;
     for (int i = 0; i < point_amt-1 ; i++) {
@@ -50,8 +50,8 @@ Edge** generate_graph(int point_amt, Point** points) {
     return graph;
 }
 
-void process_MST(UT* ut, Edge** graph, int point_amt, int group_amt) {
-    Point *p1, *p2;
+void process_MST(UT* ut, Edge* graph, int point_amt, int group_amt) {
+    int pid1, pid2;
     int graph_size = point_amt * (point_amt-1) / 2;
     int totalConnections =  point_amt - group_amt;
     int currConnections = 0;
@@ -59,11 +59,11 @@ void process_MST(UT* ut, Edge** graph, int point_amt, int group_amt) {
     if (totalConnections == 0) return;
 
     for (int i = 0; i < graph_size; i++) {
-        p1 = edge_get_p1(graph[i]);
-        p2 = edge_get_p2(graph[i]);
+        pid1 = edge_get_pid1(graph[i]);
+        pid2 = edge_get_pid2(graph[i]);
 
-        if (UT_find(ut, p1) != UT_find(ut, p2)) {
-            UT_union(ut, p1, p2);
+        if (UT_find_by_id(ut, pid1) != UT_find_by_id(ut, pid2)) {
+            UT_union_by_id(ut, pid1, pid2);
             currConnections++;
         }
 
@@ -114,7 +114,7 @@ Group** generate_groups(UT* ut, Point** points, int group_amt) {
 
     for(int i = 0; i < UT_get_size(ut); i++) {
         for (int j = 0; j < group_amt; j++) {
-            if (UT_find(ut, points[i]) == group_get_id(groups[j])) {
+            if (UT_find_by_id(ut, i) == group_get_id(groups[j])) {
                 group_add_point(groups[j], points[i]);
             }
         }

@@ -62,7 +62,8 @@ double point_get_distance(Point* p1, Point* p2) {
         distance += aux * aux;
     }
 
-    return sqrt(distance);
+    // Calculating the sqrt is unnecessary since the actual values wont be used
+    return distance;
 }
 
 void point_destroy(Point* p) {

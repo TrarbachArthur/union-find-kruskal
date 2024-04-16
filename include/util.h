@@ -10,9 +10,9 @@ int measure_dimensions(FILE* input_file);
 
 int count_points(FILE* input_file);
 
-Edge** generate_graph(int point_amt, Point** points);
+Edge* generate_graph(int point_amt, Point** points);
 
-void process_MST(UT* ut, Edge** graph, int point_amt, int group_amt);
+void process_MST(UT* ut, Edge* graph, int point_amt, int group_amt);
 
 Group** initialize_groups(UT* ut, int group_amt);
 

@@ -36,6 +36,21 @@ void UT_union(UT* ut, Point* p1, Point* p2) {
     }
 }
 
+void UT_union_by_id(UT* ut, int pid1, int pid2) {
+    int i = UT_find_by_id(ut, pid1);
+    int j = UT_find_by_id(ut, pid2);
+
+    if (i == j) return;
+
+    if (ut->sizes[i] < ut->sizes[j]) {
+        ut->tree[i] = j;
+        ut->sizes[j] += ut->sizes[i];
+    } else {
+        ut->tree[j] = i;
+        ut->sizes[i] += ut->sizes[j];
+    }
+}
+
 int UT_find(UT* ut, Point* p) {
     int id = point_get_id(p);
 
